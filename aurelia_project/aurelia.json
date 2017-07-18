@@ -145,6 +145,14 @@
             "main": "aurelia-http-client",
             "path": "../node_modules/aurelia-http-client/dist/amd",
             "resources": []
+          },
+          {
+            "name": "leaflet",
+            "main": "dist/leaflet-src.js",
+            "path": "../node_modules/leaflet",
+            "resources": [
+              "dist/leaflet.css"
+            ]
           }
         ]
       }
