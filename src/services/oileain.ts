@@ -18,7 +18,7 @@ export class Oileain {
     this.ea = ea;
     this.http = http;
     //this.getAll();
-    this.getAllIslands();
+    //this.getAllIslands();
   }
 
   getAll() {
@@ -34,7 +34,7 @@ export class Oileain {
       .then(response => response.json())
       .then(islands => {
         this.coasts = islands;
-        this.ea.publish(new CoastsUpdate(this.coasts));
+        //this.ea.publish(new CoastsUpdate(this.coasts));
         this.createIslandMap();
         return islands;
       });

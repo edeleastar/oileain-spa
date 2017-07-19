@@ -1,0 +1,20 @@
+<template>
+  <div class="ui styled accordion">
+    <div repeat.for="coast of coasts">
+      <div class="ui title">
+        <i class="dropdown icon"></i>
+        ${coast.title}
+      </div>
+      <div class="ui content">
+        <div class="ui vertical menu">
+          <div repeat.for="poi of coast.pois"
+               class="ui ${poi.safeName === $parent.$parent.selectedPoiName ? 'active' : ''} item">
+            <a route-href="route: pois; params.bind: {id:poi.safeName}" click.delegate="$parent.$parent.select(poi)">
+              <div innerhtml.bind="poi.nameHtml"> ${poi.nameHtml}</div>
+            </a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</template>
