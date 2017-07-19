@@ -11,10 +11,20 @@
     <div class="ui five wide column">
       <h2> Oilean </h2>
     </div>
+    <div class="two wide column sitemap">
+      <div class="popup" data-content="Explore Individual Islands">
+        <a click.delegate="home()"> <i class="huge map icon"></i> <br> Home </a>
+      </div>
+    </div>
+    <div class="two wide column sitemap">
+      <div class="popup" data-content="Explore Individual Islands">
+        <a click.delegate="toggleSidebar()"> <i class="huge compass icon"></i> <br> Islands </a>
+      </div>
+    </div>
   </header>
 
   <div class="ui segment pushable">
-    <div class="ui inline visible vertical sidebar">
+    <div class="ui inline vertical right sidebar">
       <poi-list></poi-list>
     </div>
     <div class="pusher">

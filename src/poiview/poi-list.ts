@@ -18,11 +18,17 @@ export class PoiList {
   }
 
   select(poi: PointOfInterest) {
-   this.selectedPoiName = poi.safeName;
+    this.toggleSidebar();
+    this.selectedPoiName = poi.safeName;
     return true;
   }
 
   attached() {
     $('.ui.accordion').accordion();
+  }
+  toggleSidebar() {
+    $('.ui.sidebar')
+        .sidebar('toggle')
+    ;
   }
 }

@@ -18,11 +18,21 @@ export class App {
     this.router = router;
   }
 
+  home() {
+    this.router.navigate('/');
+  }
+
   attached() {
     $('.ui.sidebar')
       .sidebar({ context: $('.pushable'),
                  dimPage: false})
       .sidebar('setting', 'transition', 'overlay')
       .sidebar('attach events', '#toc');
+  }
+
+  toggleSidebar() {
+    $('.ui.sidebar')
+        .sidebar('toggle')
+    ;
   }
 }
