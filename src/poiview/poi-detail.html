@@ -1,11 +1,18 @@
 <template>
-  <div class="ui segment">
-    <div class="ui heading">
-      <h1 innerhtml.bind="poi.nameHtml"> ${poi.nameHtml} </h1>
-    </div>
-    <div id="map" class="ui embed"></div>
-    <div class="ui segment" >
-      <p innerhtml.bind="poi.description"> ${poi.description}</p>
-    </div>
+  <div class="ui center aligned middle aligned stackable segment">
+    <section class="ui grid">
+      <div class="ui twelve wide column">
+        <div id="map" class="ui embed"></div>
+      </div>
+      <div class="ui card">
+        <div class="content">
+          <div class="header" innerhtml.bind="poi.nameHtml">${poi.name}</div>
+          <div class="meta">${poi.costalZone}</div>
+          <div class="description">
+            <p innerhtml.bind="poi.description"> ${poi.description}</p>
+          </div>
+        </div>
+      </div>
+    </section>
   </div>
 </template>

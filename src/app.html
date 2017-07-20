@@ -3,23 +3,14 @@
   <require from="./poiview/poi-list"></require>
 
   <header class="ui center aligned middle aligned stackable grid segment">
-    <a class="ui blue left corner label">
-      <div id="showTOC" class="popup" data-content="Reveal TOC">
-        <i id="toc" class="sitemap big  icon"></i>
-      </div>
-    </a>
     <div class="ui five wide column">
       <h2> Oilean </h2>
     </div>
-    <div class="two wide column sitemap">
-      <div class="popup" data-content="Explore Individual Islands">
-        <a click.delegate="home()"> <i class="huge map icon"></i> <br> Home </a>
-      </div>
+    <div class="two wide column">
+      <a href="#/"> <i class="huge map icon"></i> <br> Home </a>
     </div>
-    <div class="two wide column sitemap">
-      <div class="popup" data-content="Explore Individual Islands">
-        <a click.delegate="toggleSidebar()"> <i class="huge compass icon"></i> <br> Islands </a>
-      </div>
+    <div class="two wide column">
+      <a id="toc"> <i class="huge compass icon"></i> <br> Islands </a>
     </div>
   </header>
 

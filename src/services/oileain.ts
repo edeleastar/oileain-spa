@@ -30,7 +30,8 @@ export class Oileain {
 
   getAllIslands() {
     return this.http
-      .fetch('all.json')
+  //      .fetch('https://edeleastar.github.io/oileain-api/all.json')
+       .fetch('all.json')
       .then(response => response.json())
       .then(islands => {
         this.coasts = islands;

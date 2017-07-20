@@ -9,13 +9,14 @@ import Map = L.Map;
 import Layer = L.Layer;
 import LayerGroup = L.LayerGroup;
 import LayersObject = L.Control.LayersObject;
-import {createPopup, populateMapPoi} from '../services/maputils';
+import { createPopup, populateMapPoi } from '../services/maputils';
 
 @inject(Oileain, EventAggregator)
 export class PoiDetail {
   routeConfig;
   poi: PointOfInterest;
   imap: Map;
+  islandLayer = L.layerGroup([]);
   overlays: LayersObject = {};
   mbAttr = `Map data &copy; <a href="http://openstreetmap.org">OpenStreetMap</a> contributors,
             <a href="http://creativecommons.org/licenses/by-sa/2.0/">CC-BY-SA</a>, Imagery © <a href="http://mapbox.com">Mapbox</a>`;
@@ -40,13 +41,9 @@ export class PoiDetail {
     this.routeConfig.navModel.setTitle(this.poi.name);
     this.ea.publish(new PoiViewed(this.poi));
 
-    const group = populateMapPoi(this.poi);
     if (this.imap) {
-      this.overlays[this.poi.name] = group;
-      this.imap.addLayer(group);
       const popup = createPopup(poi.nameHtml, poi.geo.lat, poi.geo.long);
-      this.imap.addLayer(popup);
-
+      popup.addTo(this.islandLayer);
       console.log(this.poi);
       this.imap.setZoom(15);
       this.imap.panTo(new L.LatLng(this.poi.geo.lat, this.poi.geo.long));
@@ -54,7 +51,6 @@ export class PoiDetail {
   }
 
   activate(params, routeConfig) {
-    //this.attachMap();
     this.routeConfig = routeConfig;
     if (this.oileain.coasts) {
       this.renderPoi(this.oileain.islandMap.get(params.id));
@@ -71,9 +67,11 @@ export class PoiDetail {
         center: [53.2734, -7.7783203],
         zoom: 8,
         minZoom: 7,
-        layers: [this.baseLayers.Terrain],
+        layers: [this.baseLayers.Satellite],
       });
+      this.overlays['Islands'] = this.islandLayer;
       L.control.layers(this.baseLayers, this.overlays).addTo(this.imap);
+      this.imap.addLayer(this.islandLayer);
     }
     this.renderPoi(this.poi);
   }
