@@ -1,44 +1,38 @@
 import { inject } from 'aurelia-framework';
-import AsyncHttpClient from './async-http-client';
 import { EventAggregator } from 'aurelia-event-aggregator';
-import {Coast, PointOfInterest} from './poi';
-import { CoastsUpdate } from './messages';
+import { Coast, PointOfInterest } from './poi';
 import { HttpClient } from 'aurelia-fetch-client';
+import {resolve} from "url";
 
-@inject(AsyncHttpClient, EventAggregator, HttpClient)
+@inject(EventAggregator, HttpClient)
 export class Oileain {
   coasts: Array<Coast>;
-  ac: AsyncHttpClient;
   ea: EventAggregator;
   http: HttpClient;
   islandMap = new Map<string, PointOfInterest>();
 
-  constructor(ac, ea, http) {
-    this.ac = ac;
+  constructor(ea, http) {
     this.ea = ea;
     this.http = http;
-    //this.getAll();
-    //this.getAllIslands();
-  }
-
-  getAll() {
-    this.ac.get('/all.json').then(res => {
-      this.coasts = res.content;
-      this.ea.publish(new CoastsUpdate(this.coasts));
-    });
   }
 
   getAllIslands() {
-    return this.http
-  //      .fetch('https://edeleastar.github.io/oileain-api/all.json')
-       .fetch('all.json')
-      .then(response => response.json())
-      .then(islands => {
-        this.coasts = islands;
-        //this.ea.publish(new CoastsUpdate(this.coasts));
-        this.createIslandMap();
-        return islands;
+    if (this.coasts) {
+      return new Promise((resolve, reject) => {
+        resolve(this.coasts);
       });
+    } else
+      return (
+        this.http
+          //      .fetch('https://edeleastar.github.io/oileain-api/all.json')
+          .fetch('all.json')
+          .then(response => response.json())
+          .then(islands => {
+            this.coasts = islands;
+            this.createIslandMap();
+            return islands;
+          })
+      );
   }
 
   createIslandMap() {
@@ -47,16 +41,5 @@ export class Oileain {
         this.islandMap.set(poi.safeName, poi);
       });
     });
-  }
-
-  getCoast(coastName: string): Coast {
-    let coast: Coast = null;
-    const coasts = this.coasts.filter(coast => {
-      if (coast.title == coastName) return coast;
-    });
-    if (coasts.length > 0) {
-      coast = coasts[0];
-    }
-    return coast;
   }
 }

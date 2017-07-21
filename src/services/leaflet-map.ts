@@ -36,7 +36,7 @@ export class LeafletMap {
       layers: [defaultLayer],
     });
   }
-  
+
   addLayer(title: string, layer:Layer) {
     this.overlays[title] = layer;
     this.imap.addLayer(layer);
