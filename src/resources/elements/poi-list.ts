@@ -1,8 +1,8 @@
 import { EventAggregator } from 'aurelia-event-aggregator';
 import { inject } from 'aurelia-framework';
-import { Oileain } from '../services/oileain';
-import { CoastsUpdate, PoiViewed } from '../services/messages';
-import { Coast, PointOfInterest } from '../services/poi';
+import { Oileain } from '../../services/oileain';
+import { CoastsUpdate, PoiViewed } from '../../services/messages';
+import { Coast, PointOfInterest } from '../../services/poi';
 import 'semantic-ui';
 import * as $ from 'jquery'; // import $ from 'jquery';
 
@@ -26,6 +26,7 @@ export class PoiList {
   attached() {
     $('.ui.accordion').accordion();
   }
+
   toggleSidebar() {
     $('.ui.sidebar')
         .sidebar('toggle')

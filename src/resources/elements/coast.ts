@@ -18,24 +18,28 @@ export class NoSelection {
   routeConfig;
   coast: Coast;
   coasts: Array<Coast>;
+  title: string;
 
-  constructor(private oileain: Oileain) {
-    this.coast = ireland;
-  }
+  constructor(private oileain: Oileain) {}
 
   activate(params, routeConfig) {
     this.routeConfig = routeConfig;
     console.log(params.zone);
-    if (params.zone) {
-      if (params.zone == 'all') {
-        this.coast = ireland;
-      } else {
-        this.coast = this.oileain.coastMap.get(params.zone);
+
+    this.oileain.getAllIslands().then(islands => {
+      this.coasts = this.oileain.coasts;
+      if (params.zone) {
+        if (params.zone == 'all') {
+          this.coast = ireland;
+        } else {
+          this.coast = this.oileain.coastMap.get(params.zone);
+        }
       }
-    }
-    if (this.map) {
-      this.map.zoomTo(this.coast.geo);
-    }
+      this.title = this.coast.title;
+      if (this.map) {
+        this.map.zoomTo(this.coast.geo);
+      }
+    });
   }
 
   attached() {
@@ -44,19 +48,5 @@ export class NoSelection {
     this.map.populateCoasts(this.coasts);
     this.map.addControl();
     this.map.zoomTo(this.coast.geo);
-
-    $('.ui.sidebar')
-      .sidebar({
-        context: $('.pushable'),
-        dimPage: false,
-      })
-      .sidebar('setting', 'transition', 'overlay')
-      .sidebar('attach events', '#toc');
-  }
-
-  bind() {
-    this.oileain.getAllIslands().then(islands => {
-      this.coasts = this.oileain.coasts;
-    });
   }
 }

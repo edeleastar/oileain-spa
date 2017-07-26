@@ -1,7 +1,9 @@
 <template>
   <require from="semantic-ui/semantic.min.css"></require>
-  <require from="./poiview/poi-list"></require>
+  <require from="./resources/elements/poi-list"></require>
+  <require from="./resources/elements/coast-header"></require>
 
+  <coast-header title.one-way="title" coasts.one-way="coasts"></coast-header>
   <div class="ui segment pushable">
     <div class="ui inline vertical right sidebar">
       <poi-list></poi-list>
