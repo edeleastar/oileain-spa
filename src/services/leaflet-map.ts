@@ -2,7 +2,7 @@ import * as L from 'leaflet';
 import Map = L.Map;
 import Layer = L.Layer;
 import LayersObject = L.Control.LayersObject;
-import {Coast, GeoLocation} from "./poi";
+import {Coast, Geodetic} from "./poi";
 import LayerGroup = L.LayerGroup;
 
 export class LeafletMap {
@@ -24,7 +24,7 @@ export class LeafletMap {
     }),
   };
 
-  constructor (id:string, location:GeoLocation, zoom: number, minZoom: number, activeLayer:string = '') {
+  constructor (id:string, location:Geodetic, zoom: number, minZoom: number, activeLayer:string = '') {
     let defaultLayer = this.baseLayers.Terrain;
     if (activeLayer) {
       defaultLayer = this.baseLayers[activeLayer];
@@ -51,12 +51,17 @@ export class LeafletMap {
     L.control.layers(this.baseLayers, this.overlays).addTo(this.imap);
   }
 
-  moveTo(zoom: number, location: GeoLocation) {
+  moveTo(zoom: number, location: Geodetic) {
     this.imap.setZoom(zoom);
     this.imap.panTo(new L.LatLng(location.lat, location.long));
   }
 
-  addPopup(layerTitle:string, content:string, location: GeoLocation, ) {
+  zoomTo(location : Geodetic) {
+//    this.imap.panTo(new L.LatLng(location.lat, location.long));
+    this.imap.setView(new L.LatLng(location.lat, location.long),8);
+  }
+
+  addPopup(layerTitle:string, content:string, location: Geodetic, ) {
     let popupGroup: LayerGroup;
     if (!this.overlays[layerTitle]) {
       popupGroup = L.layerGroup([]);
@@ -83,7 +88,7 @@ export class LeafletMap {
   populateCoast(coast: Coast): LayerGroup {
     let group = L.layerGroup([]);
     coast.pois.forEach(poi => {
-      let marker = L.marker([poi.geo.lat, poi.geo.long]);
+      let marker = L.marker([poi.coordinates.geo.lat, poi.coordinates.geo.long]);
       marker.bindPopup(poi.description.substring (0,300) + `
       <a href='#/poi/${poi.safeName}'> ... More Details... </a>
     `);

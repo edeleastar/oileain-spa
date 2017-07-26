@@ -1,28 +1,41 @@
-export interface GridRef {
+export interface Grid {
   sheet: string;
-  eastings: string;
-  northings: string;
+  eastings: number;
+  northings: number;
 }
 
-export interface GeoLocation {
+export interface FullGrid {
+  eastings: number;
+  northings: number;
+}
+
+export interface Geodetic {
   lat: number;
   long: number;
 }
 
-export class PointOfInterest {
+export interface Coordinates {
+  irishGrid: Grid;
+  fullIrishGrid: FullGrid;
+  tmcGrid: FullGrid;
+  geo: Geodetic;
+}
+
+export interface PointOfInterest {
   name: string;
   safeName: string;
   nameHtml: string;
   costalZone: string;
-  grid: GridRef;
-  geo: GeoLocation;
+  coordinates: Coordinates;
   cursor: number;
   description: string;
+  coast?: Coast;
 }
 
 export interface Coast {
   title: string;
   variable: string;
   identifier: string;
+  geo : Geodetic;
   pois: Array<PointOfInterest>;
 }

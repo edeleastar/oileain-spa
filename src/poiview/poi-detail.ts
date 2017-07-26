@@ -19,9 +19,9 @@ export class PoiDetail {
     this.ea.publish(new PoiViewed(this.poi));
 
     if (this.map) {
-      this.map.addPopup('Islands', poi.nameHtml, poi.geo);
+      this.map.addPopup('Islands', poi.nameHtml, poi.coordinates.geo);
       console.log(this.poi);
-      this.map.moveTo(15, poi.geo);
+      this.map.moveTo(15, poi.coordinates.geo);
     }
   }
 

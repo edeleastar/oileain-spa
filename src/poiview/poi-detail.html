@@ -1,18 +1,17 @@
 <template>
-  <div class="ui center aligned middle aligned stackable segment">
-    <section class="ui grid">
-      <div class="ui twelve wide column">
-        <div id="map" class="ui embed"></div>
-      </div>
-      <div class="ui card">
-        <div class="content">
-          <div class="header" innerhtml.bind="poi.nameHtml">${poi.name}</div>
-          <div class="meta">${poi.costalZone}</div>
-          <div class="description">
-            <p innerhtml.bind="poi.description"> ${poi.description}</p>
-          </div>
+  <require from="./poi.html"></require>
+  <div class="ui center aligned stackable grid segment">
+    <div class="ui ten wide column">
+      <div id="map" class="ui embed"></div>
+    </div>
+    <div class="ui card">
+      <div class="content">
+        <div class="header" innerhtml.bind="poi.nameHtml">${poi.name}</div>
+        <div class="meta">${poi.coast.title}</div>
+        <div class="description">
+          <p innerhtml.bind="poi.description"> ${poi.description}</p>
         </div>
       </div>
-    </section>
+    </div>
   </div>
 </template>

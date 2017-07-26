@@ -1,7 +1,7 @@
 import { Router, RouterConfiguration } from 'aurelia-router';
 import { inject } from 'aurelia-framework';
 import 'semantic-ui';
-import * as $ from 'jquery'; // import $ from 'jquery';
+import * as $ from 'jquery';
 
 export class App {
   router: Router;
@@ -9,12 +9,11 @@ export class App {
   constructor() {}
 
   configureRouter(config: RouterConfiguration, router: Router) {
-    config.title = 'Contacts';
+    config.title = 'Oileain';
     config.map([
-      { route: '', moduleId: 'poiview/no-selection', title: 'Select' },
+      { route: ['', 'coasts/:zone'], moduleId: './resources/elements/coast', title: 'Coast' },
       { route: 'poi/:id', moduleId: 'poiview/poi-detail', name: 'pois' },
     ]);
-
     this.router = router;
   }
 

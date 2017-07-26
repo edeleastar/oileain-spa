@@ -10,6 +10,7 @@ export class Oileain {
   ea: EventAggregator;
   http: HttpClient;
   islandMap = new Map<string, PointOfInterest>();
+  coastMap = new Map<string, Coast>();
 
   constructor(ea, http) {
     this.ea = ea;
@@ -29,15 +30,17 @@ export class Oileain {
           .then(response => response.json())
           .then(islands => {
             this.coasts = islands;
-            this.createIslandMap();
+            this.createIndexes();
             return islands;
           })
       );
   }
 
-  createIslandMap() {
+  createIndexes() {
     this.coasts.forEach(coast => {
+      this.coastMap.set(coast.variable, coast);
       coast.pois.forEach(poi => {
+        poi.coast = coast;
         this.islandMap.set(poi.safeName, poi);
       });
     });
