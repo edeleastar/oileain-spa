@@ -1,7 +1,7 @@
 import { EventAggregator } from 'aurelia-event-aggregator';
 import { inject } from 'aurelia-framework';
 import { Oileain } from '../../services/oileain';
-import { CoastsUpdate, PoiViewed } from '../../services/messages';
+import { CoastsUpdated, PoiViewed } from '../../services/messages';
 import { Coast, PointOfInterest } from '../../services/poi';
 import 'semantic-ui';
 import * as $ from 'jquery'; // import $ from 'jquery';
@@ -12,8 +12,11 @@ export class PoiList {
   selectedPoiName = 'hello';
 
   constructor(private oileain: Oileain, ea: EventAggregator) {
-    oileain.getAllIslands().then(islands => {
-      this.coasts = oileain.coasts;
+    // ea.subscribe (CoastsUpdated, msg => {
+    //   this.coasts = msg.coasts;
+    // });
+    this.oileain.getAllIslands().then(coasts => {
+      this.coasts = coasts;
     });
   }
 
@@ -28,8 +31,6 @@ export class PoiList {
   }
 
   toggleSidebar() {
-    $('.ui.sidebar')
-        .sidebar('toggle')
-    ;
+    $('.ui.sidebar').sidebar('toggle');
   }
 }

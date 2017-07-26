@@ -7,6 +7,7 @@ import LayerGroup = L.LayerGroup;
 
 export class LeafletMap {
   imap: Map;
+  populated = false;
   overlays: LayersObject = {};
   mbAttr = `Map data &copy; <a href="http://openstreetmap.org">OpenStreetMap</a> contributors,
             <a href="http://creativecommons.org/licenses/by-sa/2.0/">CC-BY-SA</a>, Imagery © <a href="http://mapbox.com">Mapbox</a>`;
@@ -79,10 +80,13 @@ export class LeafletMap {
   }
 
   populateCoasts (coasts: Array<Coast>) {
-    coasts.forEach(coast => {
-      let layer = this.populateCoast(coast);
-      this.addLayer(coast.title, layer);
-    });
+    if (!this.populated) {
+      this.populated = true;
+      coasts.forEach(coast => {
+        let layer = this.populateCoast(coast);
+        this.addLayer(coast.title, layer);
+      });
+    }
   }
 
   populateCoast(coast: Coast): LayerGroup {

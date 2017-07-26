@@ -3,6 +3,7 @@ import { EventAggregator } from 'aurelia-event-aggregator';
 import { Coast, PointOfInterest } from './poi';
 import { HttpClient } from 'aurelia-fetch-client';
 import {resolve} from "url";
+import {CoastsUpdated} from "./messages";
 
 @inject(EventAggregator, HttpClient)
 export class Oileain {
@@ -15,6 +16,9 @@ export class Oileain {
   constructor(ea, http) {
     this.ea = ea;
     this.http = http;
+    // this.getAllIslands().then(coasts => {
+    //   ea.publish(new CoastsUpdated(coasts));
+    // });
   }
 
   getAllIslands() {
@@ -25,8 +29,8 @@ export class Oileain {
     } else
       return (
         this.http
-          //      .fetch('https://edeleastar.github.io/oileain-api/all.json')
-          .fetch('all.json')
+           .fetch('https://edeleastar.github.io/oileain-api/all.json')
+          //.fetch('all.json')
           .then(response => response.json())
           .then(islands => {
             this.coasts = islands;

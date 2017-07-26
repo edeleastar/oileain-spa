@@ -11,11 +11,13 @@ export class PoiDetail {
   routeConfig;
   poi: PointOfInterest;
   coasts: Array<Coast>;
+  title: string;
 
   constructor(private oileain: Oileain, private ea: EventAggregator) {}
 
   renderPoi(poi) {
     this.poi = poi;
+    this.title = poi.name;
     this.routeConfig.navModel.setTitle(this.poi.safeName);
     this.ea.publish(new PoiViewed(this.poi));
 
@@ -28,13 +30,9 @@ export class PoiDetail {
 
   activate(params, routeConfig) {
     this.routeConfig = routeConfig;
-    if (this.oileain.coasts) {
+    this.oileain.getAllIslands().then(islands => {
       this.renderPoi(this.oileain.islandMap.get(params.id));
-    } else {
-      this.oileain.getAllIslands().then(islands => {
-        this.renderPoi(this.oileain.islandMap.get(params.id));
-      });
-    }
+    });
   }
 
   attached() {

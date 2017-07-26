@@ -8,11 +8,7 @@ export class App {
   router: Router;
   coasts: Array<Coast> = [];
 
-  constructor(private oileain: Oileain) {
-    this.oileain.getAllIslands().then(islands => {
-      this.coasts = this.oileain.coasts;
-    });
-  }
+  constructor(private oileain: Oileain) {}
 
   configureRouter(config: RouterConfiguration, router: Router) {
     config.title = 'Oileain';

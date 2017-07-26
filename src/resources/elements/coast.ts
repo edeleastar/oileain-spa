@@ -2,7 +2,8 @@ import { inject } from 'aurelia-framework';
 import { Oileain } from '../../services/oileain';
 import { LeafletMap } from '../../services/leaflet-map';
 import { Coast } from '../../services/poi';
-import * as $ from 'jquery';
+import { EventAggregator } from 'aurelia-event-aggregator';
+import { CoastsUpdated } from '../../services/messages';
 
 const ireland: Coast = {
   title: 'All Ireland',
@@ -12,7 +13,7 @@ const ireland: Coast = {
   pois: null,
 };
 
-@inject(Oileain)
+@inject(EventAggregator, Oileain)
 export class NoSelection {
   map: LeafletMap;
   routeConfig;
@@ -20,33 +21,50 @@ export class NoSelection {
   coasts: Array<Coast>;
   title: string;
 
-  constructor(private oileain: Oileain) {}
+  constructor(private ea: EventAggregator, private oileain: Oileain) {
+    ea.subscribe(CoastsUpdated, msg => {
+      this.populate(msg.coasts);
+    });
+  }
+
+  populate(coasts: Array<Coast>) {
+    this.coasts = coasts;
+    if (this.map) {
+      this.map.populateCoasts(this.coasts);
+    }
+  }
+
+  renderCoast(coast: Coast) {
+    this.coast = coast;
+    this.title = this.coast.title;
+    if (this.map) {
+      this.map.zoomTo(this.coast.geo);
+    }
+  }
 
   activate(params, routeConfig) {
     this.routeConfig = routeConfig;
     console.log(params.zone);
-
-    this.oileain.getAllIslands().then(islands => {
-      this.coasts = this.oileain.coasts;
-      if (params.zone) {
-        if (params.zone == 'all') {
-          this.coast = ireland;
+    this.oileain.getAllIslands().then(coasts => {
+      this.populate(coasts);
+      if (!params.zone) {
+        this.renderCoast(ireland);
+      } else {
+        if (params.zone === 'all') {
+          this.renderCoast(ireland);
         } else {
-          this.coast = this.oileain.coastMap.get(params.zone);
+          this.renderCoast(this.oileain.coastMap.get(params.zone));
         }
-      }
-      this.title = this.coast.title;
-      if (this.map) {
-        this.map.zoomTo(this.coast.geo);
       }
     });
   }
 
   attached() {
     this.map = new LeafletMap('map', { lat: 53.2734, long: -7.7783203 }, 8, 7);
-    this.coast = ireland;
-    this.map.populateCoasts(this.coasts);
     this.map.addControl();
-    this.map.zoomTo(this.coast.geo);
+
+    if (this.coasts) {
+      this.populate(this.coasts);
+    }
   }
 }

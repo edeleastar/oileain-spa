@@ -1,6 +1,6 @@
 import { Coast } from './poi';
 
-export class CoastsUpdate {
+export class CoastsUpdated {
   coasts: Array<Coast>;
   constructor(coasts: Array<Coast>) {
     this.coasts = coasts;
