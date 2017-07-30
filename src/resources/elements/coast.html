@@ -1,8 +1,7 @@
 <template>
   <require from="./coast-header"></require>
-
-  <coast-header title.two-way="title" coasts.two-way="coasts"></coast-header>
-  <div class="ui segment">
+  <coast-header title.one-way="title" coasts.one-way="coasts"></coast-header>
+  <div class="ui segment" style="z-index: 0">
     <div id="map" style="height:800px"></div>
   </div>
 </template>

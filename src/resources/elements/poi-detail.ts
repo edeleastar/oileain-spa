@@ -30,8 +30,12 @@ export class PoiDetail {
 
   activate(params, routeConfig) {
     this.routeConfig = routeConfig;
-    this.oileain.getAllIslands().then(islands => {
-      this.renderPoi(this.oileain.islandMap.get(params.id));
+    this.oileain.getCoasts().then(islands => {
+      this.oileain
+        .getIsland(this.oileain.islandMap.get(params.id))
+        .then(island => {
+          this.renderPoi(island);
+        });
     });
   }
 

@@ -1,12 +1,30 @@
 <template>
   <div class="ui middle center aligned middle aligned stackable grid segment">
     <a href="#/coasts/all"> <i class="huge map icon"></i> <br> Home </a>
+
     <div class="ui four wide column">
-      <h2> Oilean: ${title} </h2>
+      <div if.bind="!isPrimed">
+        <div class="ui active loader">
+          <div class="ui loader"> Loading</div>
+        </div>
+      </div>
+      <div if.bind="isPrimed">
+        <h2> ${title} </h2>
+      </div>
     </div>
-    <div repeat.for="coast of coasts">
-      <a href="#/coasts/${coast.variable}"> <i class="huge compass icon"></i> <br> ${coast.title} </a>
+    <div class="ui four wide column">
+      <div class="ui floating dropdown labeled blue search icon button">
+        <i class="large compass icon"></i>
+        <span class="text">Select Coast</span>
+        <div class="menu">
+          <a href="/#coasts/northEast" class="item">North East</a>
+          <a href="/#coasts/east" class="item">East</a>
+          <a href="/#coasts/south" class="item">South</a>
+          <a href="/#coasts/midWest" class="item">Mid-West</a>
+          <a href="/#coasts/northWest" class="item">North-West</a>
+        </div>
+      </div>
     </div>
-      <a id="toc"> <i class="huge compass icon"></i> <br> Islands </a>
+    <a id="toc"> <i class="huge compass icon"></i> <br> Islands </a>
   </div>
 </template>

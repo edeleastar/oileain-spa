@@ -10,7 +10,7 @@ const ireland: Coast = {
   variable: 'all',
   identifier: 'all',
   geo: { lat: 53.2734, long: -7.7783203 },
-  pois: null,
+  pois: [],
 };
 
 @inject(EventAggregator, Oileain)
@@ -20,33 +20,27 @@ export class NoSelection {
   coast: Coast;
   coasts: Array<Coast>;
   title: string;
+  populatedCoasts = new Set<Coast>();
 
-  constructor(private ea: EventAggregator, private oileain: Oileain) {
-    ea.subscribe(CoastsUpdated, msg => {
-      this.populate(msg.coasts);
-    });
-  }
-
-  populate(coasts: Array<Coast>) {
-    this.coasts = coasts;
-    if (this.map) {
-      this.map.populateCoasts(this.coasts);
-    }
-  }
+  constructor(private ea: EventAggregator, private oileain: Oileain) {}
 
   renderCoast(coast: Coast) {
     this.coast = coast;
     this.title = this.coast.title;
     if (this.map) {
       this.map.zoomTo(this.coast.geo);
+      if (!this.populatedCoasts.has(coast)) {
+        this.map.populateCoast(coast);
+        this.populatedCoasts.add(coast);
+      }
     }
   }
 
   activate(params, routeConfig) {
     this.routeConfig = routeConfig;
     console.log(params.zone);
-    this.oileain.getAllIslands().then(coasts => {
-      this.populate(coasts);
+    this.oileain.getCoasts().then(coasts => {
+      this.coasts = coasts;
       if (!params.zone) {
         this.renderCoast(ireland);
       } else {
@@ -62,9 +56,8 @@ export class NoSelection {
   attached() {
     this.map = new LeafletMap('map', { lat: 53.2734, long: -7.7783203 }, 8, 7);
     this.map.addControl();
-
-    if (this.coasts) {
-      this.populate(this.coasts);
+    if (this.coast) {
+      this.renderCoast(this.coast);
     }
   }
 }

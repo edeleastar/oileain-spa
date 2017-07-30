@@ -2,12 +2,13 @@ import { inject } from 'aurelia-framework';
 import { EventAggregator } from 'aurelia-event-aggregator';
 import { Coast, PointOfInterest } from './poi';
 import { HttpClient } from 'aurelia-fetch-client';
-import {resolve} from "url";
-import {CoastsUpdated} from "./messages";
+import { resolve } from 'url';
+import { CoastsUpdated } from './messages';
 
 @inject(EventAggregator, HttpClient)
 export class Oileain {
-  coasts: Array<Coast>;
+  isRequesting = false;
+  coasts: any[];
   ea: EventAggregator;
   http: HttpClient;
   islandMap = new Map<string, PointOfInterest>();
@@ -21,23 +22,49 @@ export class Oileain {
     // });
   }
 
-  getAllIslands() {
+  getCoasts() {
     if (this.coasts) {
       return new Promise((resolve, reject) => {
         resolve(this.coasts);
       });
-    } else
+    } else {
+      this.isRequesting = true;
       return (
         this.http
-           .fetch('https://edeleastar.github.io/oileain-api/all.json')
+          .fetch('https://edeleastar.github.io/oileain-api/all-slim.json')
           //.fetch('all.json')
           .then(response => response.json())
-          .then(islands => {
-            this.coasts = islands;
+          .then(coasts => {
+            this.coasts = coasts;
             this.createIndexes();
-            return islands;
+            this.isRequesting = false;
+            this.ea.publish(new CoastsUpdated(coasts));
+            return coasts;
           })
       );
+    }
+  }
+
+  getIsland (poi: PointOfInterest) {
+    if (!this.coasts) {
+    }
+    let cachedPoi = this.islandMap.get(poi.safeName);
+    if (cachedPoi.description) {
+      return new Promise((resolve, reject) => {
+        resolve(cachedPoi);
+      });
+    } else {
+      const path = `https://edeleastar.github.io/oileain-api/${poi.coast.variable}/${poi.safeName}.json`
+      return (
+          this.http
+              .fetch(path)
+              .then(response => response.json())
+              .then(island => {
+                this.islandMap.set(poi.safeName, island);
+                return island;
+              })
+      );
+    }
   }
 
   createIndexes() {

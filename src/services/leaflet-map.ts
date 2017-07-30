@@ -4,10 +4,12 @@ import Layer = L.Layer;
 import LayersObject = L.Control.LayersObject;
 import {Coast, Geodetic} from "./poi";
 import LayerGroup = L.LayerGroup;
+import LayerControl = L.Control.Layers;
 
 export class LeafletMap {
   imap: Map;
   populated = false;
+  control: LayerControl;
   overlays: LayersObject = {};
   mbAttr = `Map data &copy; <a href="http://openstreetmap.org">OpenStreetMap</a> contributors,
             <a href="http://creativecommons.org/licenses/by-sa/2.0/">CC-BY-SA</a>, Imagery © <a href="http://mapbox.com">Mapbox</a>`;
@@ -49,7 +51,7 @@ export class LeafletMap {
   }
 
   addControl() {
-    L.control.layers(this.baseLayers, this.overlays).addTo(this.imap);
+    this.control = L.control.layers(this.baseLayers, this.overlays).addTo(this.imap);
   }
 
   moveTo(zoom: number, location: Geodetic) {
@@ -93,11 +95,13 @@ export class LeafletMap {
     let group = L.layerGroup([]);
     coast.pois.forEach(poi => {
       let marker = L.marker([poi.coordinates.geo.lat, poi.coordinates.geo.long]);
-      marker.bindPopup(poi.description.substring (0,300) + `
-      <a href='#/poi/${poi.safeName}'> ... More Details... </a>
-    `);
+        marker.bindPopup( `${poi.nameHtml}
+        <a href='#/poi/${poi.safeName}'> ... More Details... </a>
+      `);
       marker.addTo(group);
     });
+    this.addLayer(coast.title, group);
+    this.control.addOverlay(group, coast.title);
     return group;
   }
 }

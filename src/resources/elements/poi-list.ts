@@ -12,11 +12,8 @@ export class PoiList {
   selectedPoiName = 'hello';
 
   constructor(private oileain: Oileain, ea: EventAggregator) {
-    // ea.subscribe (CoastsUpdated, msg => {
-    //   this.coasts = msg.coasts;
-    // });
-    this.oileain.getAllIslands().then(coasts => {
-      this.coasts = coasts;
+    ea.subscribe (CoastsUpdated, msg => {
+      this.coasts = msg.coasts;
     });
   }
 

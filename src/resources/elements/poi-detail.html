@@ -1,15 +1,15 @@
 <template>
   <require from="./coast-header"></require>
+  <require from="./coordinates"></require>
 
-  <coast-header title.two-way="title" coasts.two-way="coasts"></coast-header>
+  <coast-header title.two-way="title"></coast-header>
   <div class="ui center aligned stackable grid segment">
     <div class="ui ten wide column">
-      <div id="map" class="ui embed"></div>
+      <div id="map" class="ui embed" style="z-index: 0"></div>
+      <coordinates poi.one-way="poi"></coordinates>
     </div>
-    <div class="ui card">
-      <div class="content">
-        <div class="header" innerhtml.bind="poi.nameHtml">${poi.name}</div>
-        <div class="meta">${poi.coast.title}</div>
+    <div class="ui six wide column">
+      <div class="ui segment">
         <div class="description">
           <p innerhtml.bind="poi.description"> ${poi.description}</p>
         </div>

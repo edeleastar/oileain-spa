@@ -1,0 +1,72 @@
+<template>
+  <div class="ui equal width grid segment">
+    <div class="row">
+      <div class="column">
+        <p>GPS-compatible</p>
+        <table class="ui compact fixed table">
+          <tbody>
+            <tr>
+              <td class="right aligned">Latitude</td>
+              <td>${poi.coordinates.geo.lat}</td>
+            </tr>
+            <tr>
+              <td class="right aligned">Longitude</td>
+              <td>${poi.coordinates.geo.long}</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+      <div class="column">
+        <p>Transverse Mercator</p>
+        <table class="ui  compact fixed table">
+          <tbody>
+            <tr>
+              <td class="right aligned">Eastings</td>
+              <td>${poi.coordinates.tmcGrid.eastings}</td>
+            </tr>
+            <tr>
+              <td class="right aligned">Norhtings</td>
+              <td>${poi.coordinates.fullIrishGrid.northings}</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+    <div class="column">
+      <p>Full Irish Grid</p>
+      <table class="ui  compact fixed table">
+        <tbody>
+          <tr>
+            <td class="right aligned">Eastings</td>
+            <td>${poi.coordinates.fullIrishGrid.eastings}</td>
+          </tr>
+          <tr>
+            <td class="right aligned">Norhtings</td>
+            <td>${poi.coordinates.fullIrishGrid.northings}</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+    <div class="column">
+      <p>Irish Grid</p>
+      <table class="ui compact fixed table">
+        <tbody>
+          <tr>
+            <td class="right aligned">Sheet</td>
+            <td>${poi.coordinates.irishGrid.sheet}</td>
+          </tr>
+          <tr>
+            <td class="right aligned">Eastings</td>
+            <td>${poi.coordinates.irishGrid.eastings}</td>
+          </tr>
+          <tr>
+            <td class="right aligned">Norhtings</td>
+            <td>${poi.coordinates.irishGrid.northings}</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+
+  </div>
+
+</template>
