@@ -81,15 +81,15 @@ export class LeafletMap {
     popup.addTo(popupGroup);
   }
 
-  populateCoasts (coasts: Array<Coast>) {
-    if (!this.populated) {
-      this.populated = true;
-      coasts.forEach(coast => {
-        let layer = this.populateCoast(coast);
-        this.addLayer(coast.title, layer);
-      });
-    }
-  }
+  // populateCoasts (coasts: Array<Coast>) {
+  //   if (!this.populated) {
+  //     this.populated = true;
+  //     coasts.forEach(coast => {
+  //       let layer = this.populateCoast(coast);
+  //       this.addLayer(coast.title, layer);
+  //     });
+  //   }
+  // }
 
   populateCoast(coast: Coast): LayerGroup {
     let group = L.layerGroup([]);

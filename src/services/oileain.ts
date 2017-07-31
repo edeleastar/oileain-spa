@@ -46,8 +46,6 @@ export class Oileain {
   }
 
   getIsland (poi: PointOfInterest) {
-    if (!this.coasts) {
-    }
     let cachedPoi = this.islandMap.get(poi.safeName);
     if (cachedPoi.description) {
       return new Promise((resolve, reject) => {
