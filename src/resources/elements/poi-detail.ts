@@ -4,8 +4,9 @@ import { Coast, PointOfInterest } from '../../services/poi';
 import { Oileain } from '../../services/oileain';
 import { PoiViewed } from '../../services/messages';
 import { LeafletMap } from '../../services/leaflet-map';
+import { App } from '../../app';
 
-@inject(Oileain, EventAggregator)
+@inject(Oileain, EventAggregator, App)
 export class PoiDetail {
   map: LeafletMap;
   routeConfig;
@@ -13,11 +14,12 @@ export class PoiDetail {
   coasts: Array<Coast>;
   title: string;
 
-  constructor(private oileain: Oileain, private ea: EventAggregator) {}
+  constructor(private oileain: Oileain, private ea: EventAggregator, private app:App) {}
 
   renderPoi(poi) {
     this.poi = poi;
     this.title = poi.name;
+    this.app.title = poi.name;
     this.routeConfig.navModel.setTitle(this.poi.safeName);
     this.ea.publish(new PoiViewed(this.poi));
 
@@ -25,6 +27,7 @@ export class PoiDetail {
       this.map.addPopup('Islands', poi.nameHtml, poi.coordinates.geo);
       console.log(this.poi);
       this.map.moveTo(15, poi.coordinates.geo);
+      this.map.invalidateSize();
     }
   }
 

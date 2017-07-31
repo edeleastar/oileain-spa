@@ -9,7 +9,9 @@ import * as $ from 'jquery'; // import $ from 'jquery';
 @inject(Oileain, EventAggregator)
 export class PoiList {
   coasts: Array<Coast>;
-  selectedPoiName = 'hello';
+  poi: PointOfInterest;
+  selectedPoiName = '';
+  selectedCoast = '';
 
   constructor(private oileain: Oileain, ea: EventAggregator) {
     ea.subscribe (CoastsUpdated, msg => {
@@ -19,7 +21,9 @@ export class PoiList {
 
   select(poi: PointOfInterest) {
     this.toggleSidebar();
+    this.poi = poi;
     this.selectedPoiName = poi.safeName;
+    this.selectedCoast = poi.coast.variable;
     return true;
   }
 

@@ -1,7 +1,7 @@
 <template>
   <div class="ui styled accordion">
     <div repeat.for="coast of coasts">
-      <div class="ui title">
+      <div class="ui ${coast.variable === $parent.selectedCoast ? 'active' : ''} title">
         <i class="dropdown icon"></i>
         ${coast.title}
       </div>

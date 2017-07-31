@@ -95,13 +95,19 @@ export class LeafletMap {
     let group = L.layerGroup([]);
     coast.pois.forEach(poi => {
       let marker = L.marker([poi.coordinates.geo.lat, poi.coordinates.geo.long]);
-        marker.bindPopup( `${poi.nameHtml}
-        <a href='#/poi/${poi.safeName}'> ... More Details... </a>
-      `);
+
+      var newpopup = L.popup({ autoClose: false, closeOnClick:false }).setContent(
+          `<a href='#/poi/${poi.safeName}'>${poi.nameHtml} </a>`
+      );
+      marker.bindPopup(newpopup);
       marker.addTo(group);
     });
     this.addLayer(coast.title, group);
     this.control.addOverlay(group, coast.title);
     return group;
+  }
+
+  invalidateSize() {
+    this.imap.invalidateSize();
   }
 }

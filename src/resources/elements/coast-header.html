@@ -1,8 +1,9 @@
 <template>
-  <div class="ui middle center aligned middle aligned stackable grid segment">
-    <a href="#/coasts/all"> <i class="huge map icon"></i> <br> Home </a>
-
-    <div class="ui four wide column">
+  <div class="ui center aligned middle aligned stackable grid segment">
+    <div class="one wide column">
+      <a href="#"> <i class="huge map icon"></i> </a>
+    </div>
+    <div class="ui five wide column">
       <div if.bind="!isPrimed">
         <div class="ui active loader">
           <div class="ui loader"> Loading</div>
@@ -12,19 +13,17 @@
         <h2> ${title} </h2>
       </div>
     </div>
-    <div class="ui four wide column">
-      <div class="ui floating dropdown labeled blue search icon button">
-        <i class="large compass icon"></i>
-        <span class="text">Select Coast</span>
-        <div class="menu">
-          <a href="#coasts/northEast" class="item">North East</a>
-          <a href="#coasts/east" class="item">East</a>
-          <a href="#coasts/south" class="item">South</a>
-          <a href="#coasts/midWest" class="item">Mid-West</a>
-          <a href="#coasts/northWest" class="item">North-West</a>
-        </div>
+    <div class="six wide column">
+      <div class="ui center aligned mini message segment">
+        <p> An experiment in exploring <a href="http://www.oileain.org/">David Walsh's Oileain</a>. Prepared by Eamonn
+          de Leastar (edeleastar@gmail.com) </p>
       </div>
     </div>
-    <a id="toc"> <i class="huge compass icon"></i> <br> Islands </a>
+    <div class="two wide column">
+      <a href="http://www.oileain.org/"><img class="ui tiny image" src="http://www.oileain.org/wp-content/uploads/2015/05/oileain_2X.png"></a>
+    </div>
+    <div class="one wide column">
+      <a id="toc"> <i class="huge compass icon"></i> </a>
+    </div>
   </div>
 </template>
