@@ -4,11 +4,10 @@ import { Coast } from '../../services/poi';
 import * as $ from 'jquery';
 import { Oileain } from '../../services/oileain';
 import { EventAggregator } from 'aurelia-event-aggregator';
-import {CoastsUpdated} from "../../services/messages";
+import { CoastsUpdated } from '../../services/messages';
 
 @inject(EventAggregator, Oileain)
 export class CoastHeader {
-  @bindable coasts: Array<Coast>;
   @bindable title: string;
   activeIndicator = 'active';
   isPrimed = false;
@@ -24,16 +23,11 @@ export class CoastHeader {
     });
   }
   attached() {
-
-    $('.ui.dropdown')
-        .dropdown({
-          on: 'hover'
-        });
     $('.ui.sidebar')
       .sidebar({
         context: $('.pushable'),
         dimPage: false,
-        on: 'hover'
+        on: 'hover',
       })
       .sidebar('setting', 'transition', 'overlay')
       .sidebar('attach events', '#toc');

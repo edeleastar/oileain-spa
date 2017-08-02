@@ -18,14 +18,20 @@ export class App {
     config.map([
       {
         route: [''],
-        moduleId: './resources/elements/coast',
+        moduleId: './components/home',
         title: 'All Islands',
       },
       {
         route: 'poi/:id',
-        moduleId: './resources/elements/poi-detail',
+        moduleId: './components/poi-detail',
         name: 'pois',
         title: 'Island',
+      },
+      {
+        route: 'navigator',
+        moduleId: './components/navigator',
+        name: 'navigator',
+        title: 'Navigtor',
       },
     ]);
     this.router = router;

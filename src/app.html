@@ -2,10 +2,9 @@
   <require from="semantic-ui/semantic.min.css"></require>
   <require from="./resources/elements/poi-list"></require>
   <require from="./resources/elements/coast-header"></require>
-  <coast-header title.one-way="title" coasts.one-way="coasts"></coast-header>
 
+  <coast-header title.one-way="title"></coast-header>
   <div class="ui segment pushable">
-
     <div class="ui inline vertical right sidebar">
       <poi-list></poi-list>
     </div>
@@ -13,7 +12,7 @@
       <div show.bind="!mapVisible">
         <router-view></router-view>
       </div>
-        <div id="map" style="height:800px;;z-index: 0;visibility: ${mapVisible ? 'visible' : 'hidden'}"></div>
+      <div id="map" style="height:800px;;z-index: 0;visibility: ${mapVisible ? 'visible' : 'hidden'}"></div>
     </div>
   </div>
 </template>

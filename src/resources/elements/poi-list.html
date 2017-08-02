@@ -10,7 +10,7 @@
           <div repeat.for="poi of coast.pois"
                class="ui ${poi.safeName === $parent.$parent.selectedPoiName ? 'active' : ''} item">
             <a route-href="route: pois; params.bind: {id:poi.safeName}" click.delegate="$parent.$parent.select(poi)">
-              <div innerhtml.bind="poi.nameHtml"> ${poi.nameHtml}</div>
+              <div innerhtml.bind="poi.name"> ${poi.nameHtml}</div>
             </a>
           </div>
         </div>

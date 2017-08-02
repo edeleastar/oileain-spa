@@ -43,7 +43,7 @@ export class Oileain {
           })
       );
     }
-  }
+  }k
 
   getIsland (poi: PointOfInterest) {
     let cachedPoi = this.islandMap.get(poi.safeName);

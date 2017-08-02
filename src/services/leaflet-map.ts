@@ -2,7 +2,7 @@ import * as L from 'leaflet';
 import Map = L.Map;
 import Layer = L.Layer;
 import LayersObject = L.Control.LayersObject;
-import {Coast, Geodetic} from "./poi";
+import { Geodetic } from './poi';
 import LayerGroup = L.LayerGroup;
 import LayerControl = L.Control.Layers;
 
@@ -27,7 +27,13 @@ export class LeafletMap {
     }),
   };
 
-  constructor (id:string, location:Geodetic, zoom: number, minZoom: number, activeLayer:string = '') {
+  constructor(
+    id: string,
+    location: Geodetic,
+    zoom: number,
+    minZoom: number,
+    activeLayer: string = '',
+  ) {
     let defaultLayer = this.baseLayers.Terrain;
     if (activeLayer) {
       defaultLayer = this.baseLayers[activeLayer];
@@ -40,7 +46,7 @@ export class LeafletMap {
     });
   }
 
-  addLayer(title: string, layer:Layer) {
+  addLayer(title: string, layer: Layer) {
     this.overlays[title] = layer;
     this.imap.addLayer(layer);
   }
@@ -51,7 +57,9 @@ export class LeafletMap {
   }
 
   addControl() {
-    this.control = L.control.layers(this.baseLayers, this.overlays).addTo(this.imap);
+    this.control = L.control
+      .layers(this.baseLayers, this.overlays)
+      .addTo(this.imap);
   }
 
   moveTo(zoom: number, location: Geodetic) {
@@ -59,12 +67,11 @@ export class LeafletMap {
     this.imap.panTo(new L.LatLng(location.lat, location.long));
   }
 
-  zoomTo(location : Geodetic) {
-//    this.imap.panTo(new L.LatLng(location.lat, location.long));
-    this.imap.setView(new L.LatLng(location.lat, location.long),8);
+  zoomTo(location: Geodetic) {
+    this.imap.setView(new L.LatLng(location.lat, location.long), 8);
   }
 
-  addPopup(layerTitle:string, content:string, location: Geodetic, ) {
+  addPopup(layerTitle: string, content: string, location: Geodetic) {
     let popupGroup: LayerGroup;
     if (!this.overlays[layerTitle]) {
       popupGroup = L.layerGroup([]);
@@ -76,35 +83,10 @@ export class LeafletMap {
     const popup = L.popup({
       closeOnClick: false,
       closeButton: false,
-    }).setLatLng({lat:location.lat, lng:location.long})
-        .setContent(content);
+    })
+      .setLatLng({ lat: location.lat, lng: location.long })
+      .setContent(content);
     popup.addTo(popupGroup);
-  }
-
-  // populateCoasts (coasts: Array<Coast>) {
-  //   if (!this.populated) {
-  //     this.populated = true;
-  //     coasts.forEach(coast => {
-  //       let layer = this.populateCoast(coast);
-  //       this.addLayer(coast.title, layer);
-  //     });
-  //   }
-  // }
-
-  populateCoast(coast: Coast): LayerGroup {
-    let group = L.layerGroup([]);
-    coast.pois.forEach(poi => {
-      let marker = L.marker([poi.coordinates.geo.lat, poi.coordinates.geo.long]);
-
-      var newpopup = L.popup({ autoClose: false, closeOnClick:false }).setContent(
-          `<a href='#/poi/${poi.safeName}'>${poi.nameHtml} </a>`
-      );
-      marker.bindPopup(newpopup);
-      marker.addTo(group);
-    });
-    this.addLayer(coast.title, group);
-    this.control.addOverlay(group, coast.title);
-    return group;
   }
 
   invalidateSize() {

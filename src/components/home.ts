@@ -1,11 +1,11 @@
 import { inject } from 'aurelia-framework';
-import { Oileain } from '../../services/oileain';
-import { LeafletMap } from '../../services/leaflet-map';
-import { Coast } from '../../services/poi';
-import { App } from '../../app';
+import { Oileain } from '../services/oileain';
+import { LeafletMap } from '../services/leaflet-map';
+import { Coast } from '../services/poi';
+import { App } from '../app';
 
 @inject(Oileain, App)
-export class NoSelection {
+export class Home {
   map: LeafletMap;
   routeConfig;
   coasts: Array<Coast>;
@@ -13,18 +13,38 @@ export class NoSelection {
 
   constructor(private oileain: Oileain, private app: App) {}
 
+  populateCoast(coast: Coast) {
+    let group = L.layerGroup([]);
+    coast.pois.forEach(poi => {
+      let marker = L.marker([
+        poi.coordinates.geo.lat,
+        poi.coordinates.geo.long,
+      ]);
+      var newpopup = L.popup({
+        autoClose: false,
+        closeOnClick: false,
+      }).setContent(
+        `<a href='#/poi/${poi.safeName}'>${poi.name} <small>(click for details}</small></a>`,
+      );
+      marker.bindPopup(newpopup);
+      marker.addTo(group);
+    });
+    this.map.addLayer(coast.title, group);
+    this.map.control.addOverlay(group, coast.title);
+  }
+
   populateCoasts(coasts: Array<Coast>) {
     if (this.map && !this.populated) {
       this.populated = true;
       coasts.forEach(coast => {
-        this.map.populateCoast(coast);
+        this.populateCoast(coast);
       });
     }
   }
 
   activate(params, routeConfig) {
     this.app.mapVisible = true;
-
+    this.app.title = 'Oileain';
     this.routeConfig = routeConfig;
     console.log(params.zone);
     this.oileain.getCoasts().then(coasts => {
