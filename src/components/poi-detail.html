@@ -1,5 +1,6 @@
 <template>
   <require from="../resources/elements/coordinates"></require>
+  <require from="../resources/elements/poi-description"></require>
 
   <div class="ui center aligned stackable grid segment">
     <div class="ui ten wide column">
@@ -7,11 +8,7 @@
       <coordinates poi.one-way="poi"></coordinates>
     </div>
     <div class="ui six wide column">
-      <div class="ui segment">
-        <div class="description">
-          <p innerhtml.bind="poi.description"> ${poi.description}</p>
-        </div>
-      </div>
+      <poi-description poi.one-way="poi"></poi-description>
     </div>
   </div>
 </template>

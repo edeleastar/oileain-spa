@@ -91,5 +91,8 @@ export class LeafletMap {
 
   invalidateSize() {
     this.imap.invalidateSize();
+    //this.imap.fitBounds(this.imap.getBounds());
+    let hiddenMethodMap = this.imap as any;
+    hiddenMethodMap._onResize();
   }
 }

@@ -43,7 +43,7 @@ export class Home {
   }
 
   activate(params, routeConfig) {
-    this.app.mapVisible = true;
+    this.app.homeVisible = true;
     this.app.title = 'Oileain';
     this.routeConfig = routeConfig;
     console.log(params.zone);
@@ -54,11 +54,11 @@ export class Home {
   }
 
   attached() {
-    this.app.mapVisible = true;
-    if (!this.app.mapInitialized) {
-      this.app.mapInitialized = true;
+    this.app.homeVisible = true;
+    if (!this.app.homeMapInitialized) {
+      this.app.homeMapInitialized = true;
       this.map = new LeafletMap(
-        'map',
+        'homemap',
         { lat: 53.2734, long: -7.7783203 },
         8,
         7,
@@ -71,6 +71,6 @@ export class Home {
   }
 
   detached() {
-    this.app.mapVisible = false;
+    this.app.homeVisible = false;
   }
 }

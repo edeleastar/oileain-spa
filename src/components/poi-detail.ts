@@ -43,7 +43,7 @@ export class PoiDetail {
     }
   }
 
-  activate(params, routeConfig) {
+  activate(params, routeConfig) {;
     this.routeConfig = null;
     if (routeConfig) {
       this.routeConfig = routeConfig;

@@ -8,8 +8,11 @@ export class App {
   router: Router;
   coasts: Array<Coast> = [];
   title = 'Oileain';
-  mapVisible: boolean = false;
-  mapInitialized: boolean = false;
+  homeVisible = false;
+  homeMapInitialized = false;
+  model = {
+    id: 'Illaunroe',
+  };
 
   constructor(private oileain: Oileain) {}
 

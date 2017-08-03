@@ -62,7 +62,6 @@ export class Navigator {
   }
 
   activate(params) {
-    console.log('activate');
     this.app.title = 'Oileain: Navigator';
     console.log(params.zone);
     this.oileain.getCoasts().then(coasts => {
@@ -72,7 +71,6 @@ export class Navigator {
   }
 
   attached() {
-    console.log('attached');
     this.map = new LeafletMap(
       'navigatormap',
       { lat: 53.2734, long: -7.7783203 },

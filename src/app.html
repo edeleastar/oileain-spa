@@ -8,11 +8,11 @@
     <div class="ui inline vertical right sidebar">
       <poi-list></poi-list>
     </div>
-    <div class="pusher">
-      <div show.bind="!mapVisible">
+    <div class="pusher" style="height:100%">
+      <div show.bind="!homeVisible">
         <router-view></router-view>
       </div>
-      <div id="map" style="height:800px;;z-index: 0;visibility: ${mapVisible ? 'visible' : 'hidden'}"></div>
+      <div id="homemap" style="height:100%; visibility: ${homeVisible ? 'visible' : 'hidden'}"></div>
     </div>
   </div>
 </template>
