@@ -39,6 +39,7 @@ export class Home {
       coasts.forEach(coast => {
         this.populateCoast(coast);
       });
+      this.map.invalidateSize();
     }
   }
 

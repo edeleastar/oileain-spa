@@ -1,6 +1,5 @@
 import { inject } from 'aurelia-framework';
 import { bindable } from 'aurelia-framework';
-import { Coast } from '../../services/poi';
 import * as $ from 'jquery';
 import { Oileain } from '../../services/oileain';
 import { EventAggregator } from 'aurelia-event-aggregator';
