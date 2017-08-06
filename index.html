@@ -10,38 +10,6 @@
   </head>
 
   <body aurelia-app="main">
-    <div id="loadingProgress"></div>
-    <script>
-      var expectedModules = 89;
-      function outputProgress() {
-        var loadedModules = 0;
-        // Make sure that requirejs is loaded and welll defined to avoid any exception here
-        if (window && window.require && window.require.s &&
-            window.require.s.contexts && window.require.s.contexts._ &&
-            window.require.s.contexts._.defined)
-          loadedModules = Object.keys(window.require.s.contexts._.defined).length;
-
-        // Calculate the progress
-        var progress = Math.round(loadedModules / expectedModules * 100);
-
-        // Get the HTML element with id="loadingProgress"
-        var elem = document.getElementById("loadingProgress");
-        if (elem) {
-          if (progress > 100) {
-            // Oops, something went wrong. We underestimate the number of modules
-            progress = 100;
-          }
-          // Set the progress text
-          elem.innerHTML = progress + "%";
-          if (progress < 100) {
-            // Evaluare again in 100 milliseconds
-            setTimeout(outputProgress, 100);
-          }
-        }
-      }
-      // Initial call done in the global scope
-      outputProgress();
-    </script>
     <script src="scripts/vendor-bundle.js" data-main="aurelia-bootstrapper"></script>
   </body>
 </html>
